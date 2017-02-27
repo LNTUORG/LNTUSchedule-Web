@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
+    <title></title>
+    <link rel="stylesheet" href="../css/table.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" href="../css/zzsc.css" type="text/css">
+    <style>
+        .testInfor input{
+            display: inline-block;
+            width:150px;
+            height: 20px;
+           margin-top: 20px;
+        }
+        .testInfor span{
+            color: black;
+        }
+        .testInfor button{
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+        }
+        .testInfor label{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="caption">
+    <div id="nav">
+        <div id="navarea">
+            <dl id="navs">
+                <dt><a href="../index.html"><span>教室占用情况</span></a></dt>
+
+                <dt ><a href="building.html"><span>教学楼</span></a></dt>
+                <dt class="on"><a href="systemManage.html"><span>系统设置</span></a></dt>
+                <dt><a href="queryLog.html"><span>查询日志</span></a></dt>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="query-wrap">
+
+
+    <div class="testInfor">
+        <span>时间：</span><input type="date" id="firstDay">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onclick="saveData()">保存</button>&nbsp;&nbsp;
+        <label style="display: block;margin-top: 10px">
+            *:填入开学第一周的周一，用来计算周数，每个学期需要设置一次。比如开学时间是2016-08-30，同时这是第一周，但是这是30日是周二，所以应该填入2016-08-29
+        </label>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jconfirmaction.jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/application/config/login-test-info",
+            dataType: 'json',
+            success: function (obj) {
+                $("#uname").val(obj.admin_user_id);
+                $("#upsd").val(obj.admin_password);
+            },
+            error:function(a){
+
+            }
+        });
+
+
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/application/config/first-week-monday",
+            dataType: 'json',
+            success: function (obj) {
+                //console.log(obj.first_week_monday);
+                var m = obj.first_week_monday.length;
+                var n = obj.first_week_monday.indexOf('T');
+                var n1 = obj.first_week_monday.substring(n,m)
+                var date = obj.first_week_monday.replace(n1,"");
+                $("#firstDay").val(date);
+            },
+            error:function(a){
+
+            }
+        });
+    });
+
+
+    function save(){
+        $.ajax({
+            type: "post",
+            url: "https://api.schedule.lntu.org/application/config/login-test-info",
+            dataType: 'json',
+            data:{
+                "admin_password":$("#uname").val(),
+                "admin_user_id":$("#upsd").val()
+            },
+            success: function (obj) {
+                alert("保存成功！")
+            },
+            error:function(a){
+
+            }
+        });
+    }
+
+
+    function saveData(){
+        $.ajax({
+            type: "post",
+            url: "https://api.schedule.lntu.org/application/config/first-week-monday",
+            dataType: 'json',
+            data:{
+                "first_week_monday":$("#firstDay").val()
+            },
+            success: function (obj) {
+                alert("保存成功！")
+            },
+            error:function(a){
+
+            }
+        });
+    }
+
+
+</script>
+</html>

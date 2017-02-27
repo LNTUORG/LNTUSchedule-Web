@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
+    <title></title>
+    <link rel="stylesheet" href="../css/table.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" href="../css/zzsc.css" type="text/css">
+    <link type="text/css" rel="stylesheet" href="../css/index.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/page.css">
+    <style>
+        .faceShow{
+            width:100%;
+            margin:0 auto;
+            position:relative;
+        }
+        .faceShow span{
+            line-height:10px;
+            padding:5px;
+            width:10%;
+            text-align:center;
+            border:1px #000000 solid;
+
+        }
+        #faceContent{
+            width:800px;
+            border:1px #CCCCCC solid;
+            display:none;
+            border-radius:5px;
+        }
+        #clipDIV{
+            position: absolute;
+            top:500px;
+        }
+        #clipDIV ul{
+            width:600px;
+        }
+        #clipDIV ul li{
+            padding: 5px 10px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="caption">
+    <div id="nav">
+        <div id="navarea">
+            <dl id="navs">
+                <dt><a href="../index.html"><span>教室占用情况</span></a></dt>
+
+                <dt ><a href="building.html"><span>教学楼</span></a></dt>
+                <dt ><a href="systemManage.html"><span>系统设置</span></a></dt>
+                <dt class="on"><a href="queryLog.html"><span>查询日志</span></a></dt>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="query-wrap">
+    <div class="queryLog">
+        <div id="container">
+            <table id="rounded-corner" class="zebra" >
+                <thead>
+                <tr>
+                    <th scope="col" class="rounded" >短信内容</th>
+                    <th scope="col" class="rounded" >教学楼名称</th>
+                    <th scope="col" class="rounded" >教学楼电话</th>
+                    <th scope="col" class="rounded" >周数</th>
+                    <th scope="col" class="rounded" >星期数</th>
+                    <th scope="col" class="rounded" >发送时间</th>
+                    <th scope="col" class="rounded" >课表快照</th>
+                </tr>
+                </thead>
+                <tbody class="tContent">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="width:60%; margin:20px auto; padding:5px;" id="clipDIV">
+
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jconfirmaction.jquery.js"></script>
+<script type="text/javascript" src="../js/page.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        clipInit();
+
+    })
+</script>
+</html>

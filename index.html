@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
+    <title></title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/zzsc.css" type="text/css">
+</head>
+<body>
+<div class="caption">
+    <div id="nav">
+        <div id="navarea">
+            <dl id="navs">
+                <dt class="on"><a href="index.html"><span>教室占用情况</span></a></dt>
+                <dt><a href="html/building.html"><span>教学楼</span></a></dt>
+                <dt><a href="html/systemManage.html"><span>系统设置</span></a></dt>
+                <dt><a href="html/queryLog.html"><span>查询日志</span></a></dt>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="query-wrap">
+    <div class="select_query">
+        <div>
+            <span>教学区</span>
+            <select id="locationID">
+                <option value="-1">请选择</option>
+            </select>
+        </div>
+        <div>
+            <span>教学楼</span>
+            <select id="buildingID">
+                <option value="-1">请选择</option>
+            </select>
+        </div>
+        <div>
+            <span>第</span>
+            <select id="week">
+                <option value="-1">请选择</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+            </select>
+            <span>周</span>
+        </div>
+        <div>
+            <select id="weekDay">
+                <option value="-1">请选择</option>
+                <option value="1">周一</option>
+                <option value="2">周二</option>
+                <option value="3">周三</option>
+                <option value="4">周四</option>
+                <option value="5">周五</option>
+                <option value="6">周六</option>
+                <option value="7">周日</option>
+            </select>
+        </div>
+        <div>
+            <input type="button" value="查询">
+        </div>
+    </div>
+</div>
+
+<div id="container">
+    <table class="zebra">
+        <thead>
+        <tr>
+            <th>教室名</th>
+            <th colspan="3">占用情况</th>
+        </tr>
+        </thead>
+        <tbody class="content">
+
+        </tbody>
+    </table>
+</div>
+
+<div class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".spinner").css("display","block");
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-location-from-system",
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    var str="";
+                    str+=" <option value='"+obj[i]["location_id"]+"'>"+obj[i]["location_name"]+"</option>";
+                    $("#locationID").append(str);
+                }
+                $(".spinner").css("display","none");
+            },
+            error:function(a){
+               if(a.status == 401){
+                   location.href="html/login.html"
+               }
+                else{
+                   alert("服务器出现错误，请与管理员联系！");
+                   $(".spinner").css("display","none");
+               }
+            }
+        })
+    });
+    $("#locationID").change(function() {
+        $(".spinner").css("display","block");
+       $("#buildingID").empty();
+       $("#buildingID").prepend("<option value='-1'>请选择</option>");
+       var s = $('#locationID option:selected') .val();
+        var url = "https://api.schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
+        $.ajax({
+            type: "get",
+            url: url,
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    if(obj[i]["location_id"] == s){
+                        var str="";
+                        str+=" <option value='"+obj[i]["building_id"]+"'>"+obj[i]["building_name"]+"</option>";
+                        $("#buildingID").append(str);
+                    }
+                }
+                $(".spinner").css("display","none ");
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+
+        })
+    });
+    function checkbox_html(arr){
+        var str = "";
+        for(var i = 0;i<arr.length;i++){
+            if(arr[i] == "0"){
+                str+="<div><input type='checkbox'></div>";
+            }
+            else if(arr[i] == "1"){
+                str+="<div><input type='checkbox' checked></div>";
+            }
+        }
+        return str;
+    }
+    $("input[type=button]").click(function () {
+        /*
+        $("#container").css("display","block");*/
+        if($("#buildingID option:selected").val()!="-1"&&$("#locationID option:selected").val()!="-1"&&$("#week option:selected").val()!="-1"&&$("#weekDay option:selected").val()!="-1"){
+            var data = {
+                "location_id":$("#locationID option:selected").val(),
+                "building_id":$("#buildingID option:selected").val(),
+                "week":$("#week option:selected").val(),
+                "week_day":$("#weekDay option:selected").val()
+            };
+            $(".content").empty();
+            $(".spinner").css("display","block");
+            $.ajax({
+                type: "post",
+                url: "https://api.schedule.lntu.org/room/v2/room-schedule",
+                data: data,
+                dataType: 'json',
+                success: function (obj) {
+                    //console.log(obj);
+                    for(var i = 0;i<obj.results.length;i++){
+                        var str = "<tr><td>"+obj.results[i].name+"</td><td colspan='3'><div class='nth'><div>第一大节</div><div>第二大节</div><div>第三大节</div><div>第四大节</div><div>第五大节</div></div><div class='state'>"+checkbox_html(obj.results[i].status)+"</div></td></tr>";
+                        $(".content").append(str);
+                        $(".spinner").css("display","none");
+                    }
+                    if(obj.results.length <=0){
+                        alert("没有数据！");
+                        $(".spinner").css("display","none");
+                    }
+                },
+                error:function(a){
+                    if(a.status == 401){
+                        location.href="html/login.html"
+                    }
+                    else{
+                        alert("服务器出现错误，请与管理员联系！");
+                        $(".spinner").css("display","none");
+                    }
+                }
+            })
+        }
+        else{
+            alert("请完善信息！");
+        }
+
+    })
+</script>
+</html>

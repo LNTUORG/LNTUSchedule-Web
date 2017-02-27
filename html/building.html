@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
+    <title></title>
+    <link rel="stylesheet" href="../css/table.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" href="../css/zzsc.css" type="text/css">
+
+</head>
+<body>
+<div class="caption">
+    <div id="nav">
+        <div id="navarea">
+            <dl id="navs">
+                <dt><a href="../index.html"><span>教室占用情况</span></a></dt>
+
+                <dt class="on"><a href="building.html"><span>教学楼</span></a></dt>
+                <dt><a href="systemManage.html"><span>系统设置</span></a></dt>
+                <dt><a href="queryLog.html"><span>查询日志</span></a></dt>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="query-wrap">
+    <div class="select_query select_query_add">
+        <div>
+            <span>教学区</span>
+            <select id="locationID">
+                <option value="-1">请选择</option>
+            </select>
+        </div>
+        <div>
+            <span>教学楼</span>
+            <select id="buildingID">
+                <option value="-1">请选择</option>
+            </select>
+        </div>
+        <div>
+            <input type="button" value="查询" onclick="query()">
+        </div>
+        <div>
+            <input type="button" value="新增" onclick="addData()">
+        </div>
+    </div>
+    <div style="clear: both"></div>
+</div>
+<div id="container">
+    <table id="rounded-corner" class="zebra" >
+        <thead>
+        <tr>
+            <th scope="col" class="rounded">校区ID</th>
+            <th scope="col" class="rounded">校区名称</th>
+            <th scope="col" class="rounded">教学楼ID</th>
+            <th scope="col" class="rounded">教学楼名称</th>
+            <th scope="col" class="rounded">教学楼电话</th>
+            <th scope="col" class="rounded">教室</th>
+            <th scope="col" class="rounded">管理员手机号</th>
+            <th scope="col" class="rounded">自动发送</th>
+            <th scope="col" class="rounded">编辑</th>
+            <th scope="col" class="rounded-q4">删除</th>
+        </tr>
+        </thead>
+        <tbody class="tContent">
+
+        </tbody>
+    </table>
+</div>
+<div class="shadow">
+    <div class="zc_content">
+        <div class="zc_content_list"><div>校区名称：</div>
+            <select class="xq-name" disabled>
+                <option value="-1"></option>
+            </select>
+        </div>
+       <div class="zc_content_list"><div>教学楼名称：</div>
+            <select class="jxl-name" disabled>
+                <option value="-1"></option>
+            </select>
+        </div>
+        <div class="add-rooms" style="display: none">
+            <form action="" method="get" style="margin: 10px" class="form_rooms">
+                <p style="text-align: center;padding:20px">教室（必须和大屏幕上的教室一一对应，否则无效）
+                </p>
+                <hr style="margin-bottom: 10px">
+                <div style="margin-bottom: 10px">
+                    <input type="button" value="全选" onclick="$('[name=\'rooms1\']').prop('checked','true'); ">
+                    <input type="button" value="取消全选" onclick="$('[name=\'rooms1\']').prop('checked', false )"><br style="padding-bottom: 10px">
+                </div>
+                <div class="lbl-contents">
+
+                </div>
+
+            </form>
+        </div>
+        <div class="zc_content_list"><div>教学楼电话：</div><input type="number"  class="jxl-phone" /></div>
+        <div class="zc_content_list"><div>管理员电话：</div><input type="number"  class="gly-phone" /></div>
+        <div class="zc_content_list"><div>自动发送：</div>
+            <select class="auto-send">
+                <option value="-1"></option>
+                <option value="true">是</option>
+                <option value="false">否</option>
+            </select>
+        </div>
+        <div class="zc_content_list"><span onclick="conf()"><a href="#">确认</a></span></div>
+        <div class="zc_content_list"><span onclick="$('.shadow').css('display','none');"><a href="#">取消</a></span></div>
+    </div>
+</div>
+<div class="shadow-add">
+    <div class="zc_content">
+            <div class="zc_content_list"><div>校区名称：</div>
+                <select class="xq-name-add">
+                    <option value="-1"></option>
+                </select>
+            </div>
+            <div class="zc_content_list"><div>教学楼名称：</div>
+                <select class="jxl-name-add">
+                    <option value="-1"></option>
+                </select>
+            </div>
+
+
+            <div class="add-rooms">
+                <form action="" method="get" style="margin: 10px" id="form_rooms">
+                    <p style="text-align: center;padding:20px">教室（必须和大屏幕上的教室一一对应，否则无效）
+                    </p>
+                    <hr style="margin-bottom: 10px">
+                    <div style="margin-bottom: 10px">
+                        <input type="button" value="全选" onclick="$('[name=\'rooms\']').prop('checked','true'); ">
+                        <input type="button" value="取消全选" onclick="$('[name=\'rooms\']').prop('checked', false )"><br style="padding-bottom: 10px">
+                    </div>
+                    <div class="lbl-content">
+
+                    </div>
+
+                </form>
+            </div>
+        <div class="zc_content_list"><div>教学楼电话：</div><input type="number" class="jxl-phone-add">
+
+        </div>
+        <div class="zc_content_list"><div>管理员电话：</div><input type="number"  class="gly-phone-add" /></div>
+            <div class="zc_content_list"><div>自动发送：</div>
+                <select class="auto-send-add">
+                    <option value="-1"></option>
+                    <option value="true">是</option>
+                    <option value="false">否</option>
+                </select>
+            </div>
+
+            <div class="zc_content_list"><span onclick="confAdd()"><a href="#">确认</a></span></div>
+            <div class="zc_content_list"><span onclick="$('.shadow-add').css('display','none');"><a href="#">返回</a></span></div>
+            <h4>提示：若添加已经存在的数据则会自动覆盖！</h4>
+
+        </div>
+</div>
+<div class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+</body>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jconfirmaction.jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".spinner").css("display","block");
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            dataType: 'json',
+            success: function (obj) {
+                //console.log(obj)
+                var flag = true;
+                for(var i = 0;i<obj.length;i++){
+                    if(i>=1){
+                        flag = true;
+                        for(var j = 0;j<i;j++){
+                            if(obj[i]["location_id"] == obj[j]["location_id"]){
+                                flag = false;
+                            }
+                        }
+                        if(flag){
+                            var str="";
+                            str+=" <option value='"+obj[i]["location_id"]+"'>"+obj[i]["location_name"]+"</option>";
+                            $("#locationID").append(str);
+                        }
+                    }else{
+                        var str="";
+                        str+=" <option value='"+obj[i]["location_id"]+"'>"+obj[i]["location_name"]+"</option>";
+                        $("#locationID").append(str);
+                    }
+
+                }
+                $(".spinner").css("display","none");
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        });
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            dataType: 'json',
+            success: function (obj) {
+                var num = 0;
+                for(var i = 0;i<obj.length;i++){
+                    num++;
+                    var str="";
+                    str+="<tr><td>";
+                    str+=obj[i].location_id;
+                    str+="</td><td>";
+                    str+=obj[i].location_name;
+                    str+="</td><td>";
+                    str+=obj[i].building_id;
+                    str+="</td><td>";
+                    str+=obj[i].building_name;
+                    str+="</td><td>";
+                    str+=obj[i].building_phone;
+                    str+="</td><td style='position: relative'>";
+                    str+="<a style='cursor: pointer;color: #00f' onclick='$(\".rooms\").css(\"display\",\"none\");$(this).parent().find(\".rooms\").show()'>点击查看</a>";
+                    str+="<div class='rooms'><ul><li onclick='$(this).parent().parent().hide()'><img align='right' style='width: 20px;margin-left:5px;margin-bottom: 3px' src='../img/close.png'></li><li style='clear:both'></li>";
+
+                    for(var j = 0;j<obj[i].rooms.length;j++){
+                        str+="<li>";
+                        str+=obj[i].rooms[j];
+                        str+="</li>";
+                    }
+
+                    str+="</ul></div>";
+                    str+="</td><td>";
+                    str+=obj[i].manager_phone;
+                    str+="</td><td>";
+                    if(obj[i].auto_send == 0){
+                        str+="否";
+                    }
+                    else{
+                        str+="是";
+                    }
+                    str+="</td><td><a href='#'><img src='../img/user_edit.png' alt='' title='' border='0' onclick='manageP1(this)' /></a></td><td><a href='#' class='ask'><img src='../img/trash.png' alt='' title='' border='0' /></a></td></tr>";
+                    $(".tContent").append(str);
+
+                }
+                $(".spinner").css("display","none");
+                if(num == 0){
+                    alert("数据为空！");
+                    $(".spinner").css("display","none");
+                }
+                flag = "1";
+                $('.ask').jConfirmAction();
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        })
+    });
+    function query(){
+        $(".tContent").html("");
+        if($("#buildingID option:selected").val()!="-1"&&$("#locationID option:selected").val()!="-1"){
+            $(".spinner").css("display","block");
+            $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            dataType: 'json',
+            success: function (obj) {
+                var num = 0;
+                for(var i = 0;i<obj.length;i++){
+                    if(obj[i].building_id == $("#buildingID option:selected").val()){
+                        num++;
+                        var str="";
+                        str+="<tr><td>";
+                        str+=obj[i].location_id;
+                        str+="</td><td>";
+                        str+=obj[i].location_name;
+                        str+="</td><td>";
+                        str+=obj[i].building_id;
+                        str+="</td><td>";
+                        str+=obj[i].building_name;
+                        str+="</td><td>";
+                        str+=obj[i].building_phone;
+                        str+="</td><td style='position: relative'>";
+                        str+="<a style='cursor: pointer;color: #00f' onclick='$(\".rooms\").css(\"display\",\"none\");$(this).parent().find(\".rooms\").show()'>点击查看</a>";
+                        str+="<div class='rooms'><ul><li onclick='$(this).parent().parent().hide()'>关闭</li>";
+
+                        for(var j = 0;j<obj[i].rooms.length;j++){
+                            str+="<li>";
+                            str+=obj[i].rooms[j];
+                            str+="</li>";
+                        }
+                        str+="</ul></div>";
+                        str+="</td><td>";
+                        str+=obj[i].manager_phone;
+                        str+="</td><td>";
+                        if(obj[i].auto_send == 0){
+                            str+="否";
+                        }
+                        else{
+                            str+="是";
+                        }
+                        str+="</td><td><a href='#'><img src='../img/user_edit.png' alt='' title='' border='0' onclick='manageP1(this)' /></a></td><td><a href='#' class='ask'><img src='../img/trash.png' alt='' title='' border='0' /></a></td></tr>";
+                        $(".tContent").append(str);
+                    }
+                }
+                $(".spinner").css("display","none");
+                if(num == 0){
+                    alert("数据为空！");
+                    $(".spinner").css("display","none");
+                }
+                flag = "1";
+                $('.ask').jConfirmAction();
+            },
+                error:function(a){
+                    if(a.status == 401){
+                        location.href="../html/login.html"
+                    }
+                    else{
+                        alert("服务器出现错误，请与管理员联系！");
+                        $(".spinner").css("display","none");
+                    }
+                }
+        })
+        }
+        else{
+            alert("请完善信息！");
+        }
+    }
+    $("#locationID").change(function() {
+        $(".spinner").css("display","block");
+        $("#buildingID").empty();
+        $("#buildingID").prepend("<option value='-1'>请选择</option>");
+        var s = $('#locationID option:selected') .val();
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    if(obj[i]["location_id"] == s){
+                        var str="";
+                        str+=" <option value='"+obj[i]["building_id"]+"'>"+obj[i]["building_name"]+"</option>";
+                        $("#buildingID").append(str);
+                    }
+                }
+                $(".spinner").css("display","none");
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        })
+    });
+
+    function manageP1(tag){
+        $(".spinner").css("display","block");
+        $(".lbl-contents").html("");
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-location-from-system",
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    var str="";
+                    str+=" <option value='"+obj[i]["location_id"]+"'>"+obj[i]["location_name"]+"</option>";
+                    $(".xq-name").append(str);
+                }
+                $(".xq-name").val($(tag).parent().parent().prevAll().eq(7).text());
+
+                var s = $('.xq-name option:selected') .val();
+                var url = "https://api.schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
+
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    dataType: 'json',
+                    success: function (obj) {
+                        for(var i = 0;i<obj.length;i++){
+                            if(obj[i]["location_id"] == s){
+                                var str="";
+                                str+=" <option value='"+obj[i]["building_id"]+"'>"+obj[i]["building_name"]+"</option>";
+                                $(".jxl-name").append(str);
+                            }
+                            $(".jxl-name").val($(tag).parent().parent().prevAll().eq(5).text());
+
+
+                        }
+
+                        var s1 = $('.xq-name option:selected') .val();
+                        var s2 = $('.jxl-name option:selected') .val();
+                        var urls = "https://api.schedule.lntu.org/room/v1/lntu-room-from-system?location_id="+s1+"&building_id="+s2;
+
+                        $.ajax({
+                            type: "get",
+                            url: urls,
+                            dataType: 'json',
+                            success: function (obj) {
+                                var arr=[];
+                                $.ajax({
+                                    type: "get",
+                                    url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                                    dataType: 'json',
+                                    success: function (obj1) {
+
+                                        var num = 0;
+                                        for(var i = 0;i<obj1.length;i++){
+                                            if(obj1[i].location_id ==s1 &&obj1[i].building_id==s2){
+
+                                                arr=obj1[i].rooms;
+                                                for(var ii = 0;ii<obj.length;ii++){
+                                                    var str="";
+                                                    if(arr.indexOf(obj[ii]["room_name"]) == -1){
+                                                        str+="<label><input name='rooms1' type='checkbox' value='"+obj[ii]["room_name"]+"'/>";
+                                                    }
+                                                    else{
+                                                        str+="<label><input name='rooms1' checked type='checkbox' value='"+obj[ii]["room_name"]+"'/>";
+                                                    }
+
+                                                    str+=obj[ii]["room_name"];
+                                                    str+="</label>";
+                                                    $(".lbl-contents").append(str);
+                                                }
+                                                $(".spinner").css("display","none");
+                                                return false
+                                            }
+                                        }
+                                    },
+                                    error:function(a){
+                                        if(a.status == 401){
+                                            location.href="../html/login.html"
+                                        }
+                                        else{
+                                            alert("服务器出现错误，请与管理员联系！");
+                                            $(".spinner").css("display","none");
+                                        }
+                                    }
+                                })
+
+                                $(".spinner").css("display","none");
+                            },
+                            error:function(a){
+                                if(a.status == 401){
+                                    location.href="../html/login.html"
+                                }
+                                else{
+                                    alert("服务器出现错误，请与管理员联系！");
+                                    $(".spinner").css("display","none");
+                                }
+                            }
+                        })
+                    },
+                    error:function(a){
+                        if(a.status == 401){
+                            location.href="../html/login.html"
+                        }
+                        else{
+                            alert("服务器出现错误，请与管理员联系！");
+                            $(".spinner").css("display","none");
+                        }
+                    }
+                })
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        })
+
+
+
+
+        $(".jxl-phone").val($(tag).parent().parent().prevAll().eq(3).text());
+        $(".gly-phone").val($(tag).parent().parent().prevAll().eq(1).text());
+        var txt = $(tag).parent().parent().prevAll().eq(0).text();
+
+       if(txt == "是"){
+           $(".auto-send option").eq(1).attr("selected",true);
+       }
+        if(txt == "否"){
+            $(".auto-send option").eq(2).attr("selected",true);
+        }
+
+        $(".shadow").css("display","block");
+    }
+    function conf(){
+        var chk_values =[];
+        $('input[name="rooms1"]:checked').each(function(){
+            chk_values.push($(this).val());
+        });
+        if($(".xq-name").val()!=""&&$(".jxl-name").val()!=""&&$(".jxl-phone").val()!=""&&$(".auto-send").val()!=""&&chk_values.length!=0){
+            var data = {
+                "location_id":$(".xq-name option:selected").val(),
+                "location_name":$(".xq-name option:selected").text(),
+                "building_id":$(".jxl-name option:selected").val(),
+                "building_name":$(".jxl-name option:selected").text(),
+                "building_phone":$(".jxl-phone").val(),
+                "auto_send":$(".auto-send").val(),
+                "rooms":JSON.stringify(chk_values),
+                "manager_phone":$(".gly-phone").val()
+            };
+            $(".spinner").css("display","block");
+            $.ajax({
+                type: "put",
+                url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                data: data,
+                dataType: 'json',
+                success: function () {
+                    $(".spinner").css("display","none");
+                    alert("修改成功！");
+                    history.go(0);
+                    $('.shadow').css('display','none');
+                },
+                error:function(a){
+                    if(a.status == 401){
+                        location.href="../html/login.html"
+                    }
+                    else{
+                        alert("服务器出现错误，请与管理员联系！");
+                        $(".spinner").css("display","none");
+                    }
+                }
+            })
+        }else{
+            alert("数据不能为空！");
+        }
+
+    }
+    function confAdd(){
+        var chk_value =[];
+        $('input[name="rooms"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+        if(checkFormat($(".jxl-phone-add").val())){
+            if($(".xq-name-add option:selected").val()!="-1"&&$(".jxl-name-add option:selected").val()!="-1"&&$(".jxl-phone-add").val()!=""&&$(".auto-send-add option:selected").val()!="-1" &&chk_value.length!=0){
+                var data = {
+                    "location_id":$(".xq-name-add option:selected").val(),
+                    "location_name":$(".xq-name-add option:selected").text(),
+                    "building_id":$(".jxl-name-add option:selected").val(),
+                    "building_name":$(".jxl-name-add option:selected").text(),
+                    "building_phone":$(".jxl-phone-add").val(),
+                    "auto_send":$(".auto-send-add option:selected").val(),
+                    "rooms":JSON.stringify(chk_value),
+                    "manager_phone":$(".gly-phone-add").val()
+
+                };
+                $(".spinner").css("display","block");
+                $.ajax({
+                    type: "post",
+                    url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                    data: data,
+                    dataType: 'json',
+                    success: function () {
+                        $(".spinner").css("display","none");
+                        alert("添加成功！");
+                        history.go(0);
+                        $(".shadow-add").css("display","none");
+                    },
+                    error:function(a){
+                        if(a.status == 401){
+                            location.href="../html/login.html"
+                        }
+                        else{
+                            alert("服务器出现错误，请与管理员联系！");
+                            $(".spinner").css("display","none");
+                        }
+                    }
+                })
+            }else{
+                alert("请完善数据！");
+            }
+        }
+        else{
+            alert("请注意格式！");
+        }
+
+
+    }
+    function addData(){
+        $(".shadow-add").css("display","block");
+        $(".spinner").css("display","block");
+        $.ajax({
+            type: "get",
+            url: "https://api.schedule.lntu.org/room/v1/lntu-location-from-system",
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    var str="";
+                    str+=" <option value='"+obj[i]["location_id"]+"'>"+obj[i]["location_name"]+"</option>";
+                    $(".xq-name-add").append(str);
+                }
+                $(".spinner").css("display","none");
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        })
+    }
+
+    $(".xq-name-add").change(function() {
+        $(".spinner").css("display","block");
+        $(".jxl-name-add").empty();
+        $(".jxl-name-add").prepend("<option value='-1'></option>");
+        var s = $('.xq-name-add option:selected') .val();
+        var url = "https://api.schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
+        $.ajax({
+            type: "get",
+            url: url,
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    if(obj[i]["location_id"] == s){
+                        var str="";
+                        str+=" <option value='"+obj[i]["building_id"]+"'>"+obj[i]["building_name"]+"</option>";
+                        $(".jxl-name-add").append(str);
+                    }
+                }
+                $(".spinner").css("display","none");
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        })
+    });
+    $(".jxl-name-add").change(function() {
+        $(".spinner").css("display","block");
+        $(".lbl-content").html("");
+        var s1 = $('.xq-name-add option:selected') .val();
+        var s2 = $('.jxl-name-add option:selected') .val();
+        var url = "https://api.schedule.lntu.org/room/v1/lntu-room-from-system?location_id="+s1+"&building_id="+s2;
+        $.ajax({
+            type: "get",
+            url: url,
+            dataType: 'json',
+            success: function (obj) {
+                for(var i = 0;i<obj.length;i++){
+                    var str="";
+                    str+="<label><input name='rooms' type='checkbox' value='"+obj[i]["room_name"]+"'/>";
+                    str+=obj[i]["room_name"];
+                    str+="</label>";
+                    $(".lbl-content").append(str);
+                }
+                $(".spinner").css("display","none");
+            },
+            error:function(a){
+                if(a.status == 401){
+                    location.href="../html/login.html"
+                }
+                else{
+                    alert("服务器出现错误，请与管理员联系！");
+                    $(".spinner").css("display","none");
+                }
+            }
+        })
+    });
+
+</script>
+</html>

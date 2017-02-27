@@ -1,0 +1,108 @@
+/* css 重置 */* {
+	margin: 0;
+	padding: 0;
+
+}
+
+img {
+	border: 0;
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+a:hover {
+	color: #1974A1;
+}
+/*代码整理：www.97zzw.com - 97站长网*/
+/* 本例子css */
+html,body {
+    height: 100%;
+    padding:0;
+    margin:0;
+    position:relative;
+    background:url(../img/bg0.gif);
+    background-repeat:repeat;
+    color:#fff;
+    letter-spacing:1px;
+}
+#nav {
+    width:960px;
+    margin: auto;
+	background-color: #828282;
+}
+#nav span {
+	cursor: pointer
+}
+#navarea {
+	width: 990px;
+	height: 43px;
+	margin: 0 auto;
+}
+#navarea ul {
+	clear: both;
+	float: left;
+	width: 960px;
+	padding: 4px 18px 0 18px;
+}
+#navarea li {
+	float: left;
+	height: 37px;
+	font-size: 14px;
+	line-height: 32px;
+}
+#navarea a {
+	float: left;
+	display: inline-block;
+	height: 37px;
+	padding: 0 30px;
+	color: #fff;
+	text-decoration: none;
+}
+#navarea .on a:link, #navarea .on a:visited, #navarea .on a:hover, #navarea .on a:active {
+	float: left;
+	display: inline-block;
+	height: 39px;
+	color: #393939;
+	background: url("../img/bg0.gif");
+}
+#navarea .on a:link span, #navarea .on a:visited span, #navarea .on a:hover span, #navarea .on a:active span {
+	display: inline-block;
+	height: 39px;
+    background: url("../img/bg0.gif");
+}
+#navarea .col {
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 32px;
+	float: right;
+}
+#navarea .col a {
+	display: block;
+	float: left;
+	padding: 0 10px;
+}
+#navarea dl {
+	clear: both;
+	float: left;
+	padding: 0;
+	padding-top: 4px;
+	width: 990px;
+}
+#navarea dt {
+	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	height: 41px;
+	line-height: 32px;
+}
+#navarea dt:nth-child(1){
+    margin-left: 100px;
+}
+select, option {
+    -webkit-appearance : none; /* To gain control over the appearance on WebKit */
+    -moz-appearance : none; /* To gain control over the appearance on Gecko */
+
+    /* To gain control over the appearance on Presto (Opera) and Trident (IE)
+       Note that it also work on Gecko and has partial effects on WebKit */
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href="../css/login.css" rel="stylesheet">
+    <link href="../css/reveal.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/jq.js"></script>
+    <script src="../js/jquery.reveal.js"></script>
+</head>
+<body>
+<div id="header">
+    <div class="header_title">
+        <span class="title_con">辽宁工程技术大学</span>
+    </div>
+</div>
+<div id="content">
+    <center>
+        <div class="con" style="padding-bottom: 20px">
+            <div class="con_title">
+                <span class="con_title_sp">教室管理系统</span>
+            </div>
+            <div class="con_panel">
+                <div class="con_input">
+                    <span>用户名：</span><input type="text" placeholder="请输入用户名" id="username"/>
+                </div>
+                <div class="con_input">
+                    <span>密&nbsp;&nbsp;&nbsp;&nbsp;码：</span><input type="password" placeholder="请输入密码" id="password"/>
+                </div>
+                <input type="button" value="登    录" class="submit-btn submit" id="login"/>
+                <a class="submit-btn changePw-btn" style="display: block;cursor: pointer;line-height: 2em" data-reveal-id="myModal" data-animation="fade">修改密码</a>
+            </div>
+        </div>
+    </center>
+</div>
+
+<div id="myModal" class="reveal-modal">
+    <div class="con_panel">
+        <div class="con_input">
+            <span>请输入用户名：</span><input type="text" placeholder="请输入用户名" id="oldUn" />
+        </div>
+        <div class="con_input">
+            <span>请输入旧密码：</span><input type="password" placeholder="请输入旧密码" id="oldPs" />
+        </div>
+        <div class="con_input">
+            <span>请输入新密码：</span><input type="password" placeholder="请输入新密码"  id="newPs"/>
+        </div>
+        <div class="con_input">
+            <span>请确认新密码：</span><input type="password" placeholder="请确认新密码" id="newAgainPs"/>
+        </div>
+        <input type="button" value="确    认" class="submit-btn submit" style="display: block;margin: auto;margin-top: 50px;" id="changePs"/>
+
+
+    </div>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
+<div class="spinner" style="margin-top: 40px">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+
+</body>
+
+<script>
+    $("#login").click(function(){
+        $(".spinner").css("display","block");
+        var data = {
+            "user_id":$("#username").val(),
+            "password":$("#password").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "https://api.schedule.lntu.org/account/login",
+            dataType: 'json',
+            data:data,
+            success: function (obj) {
+                $(".spinner").css("display","none");
+                location.href='../index.html';
+            },
+            error:function(){
+                $(".spinner").css("display","none");
+                alert("错误的用户名和密码组合！");
+            }
+        })
+    })
+    $("#changePs").click(function(){
+        if($("#oldPs").val()!=""&&$("#oldUn").val()!=""){
+            if($("#newPs").val() == $("#newAgainPs").val()){
+                $(".spinner").css("display","block");
+                var data = {
+                    "password ":$("#oldPs").val(),
+                    "user_id ":$("#oldUn").val(),
+                    "new_password ":$("#newAgainPs").val()
+                };
+                $.ajax({
+                    type: "post",
+                    url: "https://api.schedule.lntu.org/account/change-password",
+                    dataType: 'json',
+                    data:data,
+                    success: function (obj) {
+                       alert("修改密码成功！");
+                        location.reload();
+                    },
+                    error:function(){
+                        $(".spinner").css("display","none");
+                        alert("修改密码失败！");
+                    }
+                })
+            }else{
+                alert("两次输入新密码不一致！请重新输入！");
+                $("#newPs").val("");
+                $("#newAgainPs").val("");
+            }
+        }else{
+            alert("请输入旧密码！")
+        }
+
+
+    })
+</script>
+</html>

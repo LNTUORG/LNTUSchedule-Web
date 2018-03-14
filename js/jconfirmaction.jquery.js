@@ -35,7 +35,7 @@
 
                         $.ajax({
                             type: "delete",
-                            url: "https://api.schedule.lntu.org/room/v1/lntu-useless-class",
+                            url: "https://schedule.lntu.org/room/v1/lntu-useless-class",
                             data:data,
                             dataType: 'json',
                             success: function () {
@@ -60,7 +60,7 @@
                         console.log(data)
                         $.ajax({
                             type: "delete",
-                            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                            url: "https://schedule.lntu.org/room/v1/lntu-building",
                             data:data,
                             dataType: 'json',
                             success: function () {

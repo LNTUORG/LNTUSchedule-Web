@@ -167,7 +167,7 @@
         $(".spinner").css("display","block");
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            url: "https://schedule.lntu.org/room/v1/lntu-building",
             dataType: 'json',
             success: function (obj) {
                 //console.log(obj)
@@ -206,7 +206,7 @@
         });
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            url: "https://schedule.lntu.org/room/v1/lntu-building",
             dataType: 'json',
             success: function (obj) {
                 var num = 0;
@@ -272,7 +272,7 @@
             $(".spinner").css("display","block");
             $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            url: "https://schedule.lntu.org/room/v1/lntu-building",
             dataType: 'json',
             success: function (obj) {
                 var num = 0;
@@ -343,7 +343,7 @@
         var s = $('#locationID option:selected') .val();
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+            url: "https://schedule.lntu.org/room/v1/lntu-building",
             dataType: 'json',
             success: function (obj) {
                 for(var i = 0;i<obj.length;i++){
@@ -372,7 +372,7 @@
         $(".lbl-contents").html("");
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/room/v1/lntu-location-from-system",
+            url: "https://schedule.lntu.org/room/v1/lntu-location-from-system",
             dataType: 'json',
             success: function (obj) {
                 for(var i = 0;i<obj.length;i++){
@@ -383,7 +383,7 @@
                 $(".xq-name").val($(tag).parent().parent().prevAll().eq(7).text());
 
                 var s = $('.xq-name option:selected') .val();
-                var url = "https://api.schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
+                var url = "https://schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
 
                 $.ajax({
                     type: "get",
@@ -403,7 +403,7 @@
 
                         var s1 = $('.xq-name option:selected') .val();
                         var s2 = $('.jxl-name option:selected') .val();
-                        var urls = "https://api.schedule.lntu.org/room/v1/lntu-room-from-system?location_id="+s1+"&building_id="+s2;
+                        var urls = "https://schedule.lntu.org/room/v1/lntu-room-from-system?location_id="+s1+"&building_id="+s2;
 
                         $.ajax({
                             type: "get",
@@ -413,7 +413,7 @@
                                 var arr=[];
                                 $.ajax({
                                     type: "get",
-                                    url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                                    url: "https://schedule.lntu.org/room/v1/lntu-building",
                                     dataType: 'json',
                                     success: function (obj1) {
 
@@ -521,7 +521,7 @@
             $(".spinner").css("display","block");
             $.ajax({
                 type: "put",
-                url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                url: "https://schedule.lntu.org/room/v1/lntu-building",
                 data: data,
                 dataType: 'json',
                 success: function () {
@@ -566,7 +566,7 @@
                 $(".spinner").css("display","block");
                 $.ajax({
                     type: "post",
-                    url: "https://api.schedule.lntu.org/room/v1/lntu-building",
+                    url: "https://schedule.lntu.org/room/v1/lntu-building",
                     data: data,
                     dataType: 'json',
                     success: function () {
@@ -600,7 +600,7 @@
         $(".spinner").css("display","block");
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/room/v1/lntu-location-from-system",
+            url: "https://schedule.lntu.org/room/v1/lntu-location-from-system",
             dataType: 'json',
             success: function (obj) {
                 for(var i = 0;i<obj.length;i++){
@@ -627,7 +627,7 @@
         $(".jxl-name-add").empty();
         $(".jxl-name-add").prepend("<option value='-1'></option>");
         var s = $('.xq-name-add option:selected') .val();
-        var url = "https://api.schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
+        var url = "https://schedule.lntu.org/room/v1/lntu-building-from-system?location_id="+s;
         $.ajax({
             type: "get",
             url: url,
@@ -658,7 +658,7 @@
         $(".lbl-content").html("");
         var s1 = $('.xq-name-add option:selected') .val();
         var s2 = $('.jxl-name-add option:selected') .val();
-        var url = "https://api.schedule.lntu.org/room/v1/lntu-room-from-system?location_id="+s1+"&building_id="+s2;
+        var url = "https://schedule.lntu.org/room/v1/lntu-room-from-system?location_id="+s1+"&building_id="+s2;
         $.ajax({
             type: "get",
             url: url,

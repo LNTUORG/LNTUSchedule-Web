@@ -4,7 +4,7 @@
 clipInit=function (){
 	$.ajax({
 		type: "get",
-		url: "https://api.schedule.lntu.org/room/v1/sms-log",
+		url: "https://schedule.lntu.org/room/v1/sms-log",
 		dataType: 'json',
 		data:{
 			"cpp":7,
@@ -108,7 +108,7 @@ clipPageMax=function (cur,page,medCur){
 function getData(page){
 	$.ajax({
 		type: "get",
-		url: "https://api.schedule.lntu.org/room/v1/sms-log",
+		url: "https://schedule.lntu.org/room/v1/sms-log",
 		dataType: 'json',
 		data:{
 			"cpp":7,

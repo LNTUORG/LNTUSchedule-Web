@@ -48,7 +48,7 @@
         <span>时间：</span><input type="date" id="firstDay">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button onclick="saveData()">保存</button>&nbsp;&nbsp;
         <label style="display: block;margin-top: 10px">
-            *:填入开学第一周的周一，用来计算周数，每个学期需要设置一次。比如开学时间是2016-08-30，同时这是第一周，但是这是30日是周二，所以应该填入2016-08-29
+            *:填入开学第一周的周一，用来计算周数，每个学期需要设置一次。比如开学时间是2016-08-30，同时这是第一周，但是30日是周二，所以应该填入2016-08-29
         </label>
     </div>
 </div>
@@ -60,7 +60,7 @@
     $(document).ready(function() {
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/application/config/login-test-info",
+            url: "https://schedule.lntu.org/application/config/login-test-info",
             dataType: 'json',
             success: function (obj) {
                 $("#uname").val(obj.admin_user_id);
@@ -74,7 +74,7 @@
 
         $.ajax({
             type: "get",
-            url: "https://api.schedule.lntu.org/application/config/first-week-monday",
+            url: "https://schedule.lntu.org/application/config/first-week-monday",
             dataType: 'json',
             success: function (obj) {
                 //console.log(obj.first_week_monday);
@@ -94,7 +94,7 @@
     function save(){
         $.ajax({
             type: "post",
-            url: "https://api.schedule.lntu.org/application/config/login-test-info",
+            url: "https://schedule.lntu.org/application/config/login-test-info",
             dataType: 'json',
             data:{
                 "admin_password":$("#uname").val(),
@@ -113,7 +113,7 @@
     function saveData(){
         $.ajax({
             type: "post",
-            url: "https://api.schedule.lntu.org/application/config/first-week-monday",
+            url: "https://schedule.lntu.org/application/config/first-week-monday",
             dataType: 'json',
             data:{
                 "first_week_monday":$("#firstDay").val()
